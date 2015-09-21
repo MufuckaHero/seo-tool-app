@@ -7,6 +7,19 @@
 			    input type="text" id="url" name="url" class="form-control" placeholder="Enter URL..."
 			    .input-group-btn
 			      button class="btn btn-info" type="submit" Go!
+br
+table class="table table-striped"
+  tr class="info"
+    th Site Url
+    th Created At
+    th Actions
+  - @reports.each do |report|
+    tr
+      td.url class="col-md-4" = report[:url]
+      td.time class="col-md-4" = report[:time]
+      td.actions class="col-md-4"
+        a href="reports/#{report[:path]}" View
+
 
 
 

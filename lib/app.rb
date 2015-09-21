@@ -1,7 +1,8 @@
 require 'sinatra'
 require_relative 'seo_report/seo_report.rb'
+require_relative 'seo_report/report.rb'
 
-module Lesson1
+module Seo
   class App < ::Sinatra::Application
     before do
     FileUtils.mkdir_p("./public/reports/") unless File
@@ -12,12 +13,14 @@ module Lesson1
     use Rack::Reloader
 
     get '/' do
+      @reports = ReportsHandler.new('./public/reports/').create
       slim :index
     end
 
     post '/report' do
       @report = SeoReport.new(params[:url])
       @report.generate
+
       redirect '/'
     end
 

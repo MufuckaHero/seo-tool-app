@@ -6,4 +6,4 @@ Bundler.require
 
 require ::File.expand_path('../lib/app',  __FILE__)
 
-run Lesson1::App
+run Seo::App
