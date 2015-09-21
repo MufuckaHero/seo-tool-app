@@ -1,6 +1,6 @@
 require 'sinatra'
 require_relative 'seo_report/seo_report.rb'
-require_relative 'seo_report/report.rb'
+require_relative 'seo_report/reports.rb'
 
 module Seo
   class App < ::Sinatra::Application
