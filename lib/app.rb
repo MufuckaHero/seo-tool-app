@@ -13,7 +13,7 @@ module Seo
     use Rack::Reloader
 
     get '/' do
-      @reports = ReportsHandler.new('./public/reports/').create
+      @reports = Reports.new('./public/reports/').list
       slim :index
     end
 

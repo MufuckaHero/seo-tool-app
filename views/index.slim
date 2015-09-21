@@ -13,12 +13,13 @@ table class="table table-striped"
     th Site Url
     th Created At
     th Actions
-  - @reports.each do |report|
-    tr
-      td.url class="col-md-4" = report[:url]
-      td.time class="col-md-4" = report[:time]
-      td.actions class="col-md-4"
-        a href="reports/#{report[:path]}" View
+  - if @reports
+	  - @reports.each do |report|
+	    tr
+	      td = report[:url]
+	      td = report[:time]
+	      td
+	        a href="reports/#{report[:path]}" View
 
 
 

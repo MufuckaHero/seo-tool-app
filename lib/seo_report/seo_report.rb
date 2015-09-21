@@ -3,7 +3,7 @@ require 'nokogiri'
 require 'open-uri'
 
 class SeoReport
- def initialize(url)
+  def initialize(url)
     @url = url
   end
 
@@ -20,12 +20,12 @@ class SeoReport
     end
 
     @ip = IPSocket::getaddress(prepare(@url))
-
-    @time = Time.now
+    
+    @time = Time.at(Time.now.to_i).strftime("%e %B %Y %k:%M")
 
     _body = Slim::Template.new("./views/report.slim").render(self)
     _ready_url = prepare(@url)
-    File.write(File.expand_path("#{_ready_url}.html", "public/reports"),_body)
+    File.write(File.expand_path("#{_ready_url}_#{Time.now.to_i}.html", "public/reports"),_body)
   end
 
   def prepare(url)
