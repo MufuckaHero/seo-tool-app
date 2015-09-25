@@ -6,9 +6,7 @@ require_relative 'seo_report/files_storage.rb'
 module Seo
   class App < ::Sinatra::Application
     before do
-    FileUtils.mkdir_p("./public/reports/") unless File
-      .directory?("./public/reports/")
-    end
+    FileUtils.mkdir_p("./public/reports/") end
 
     # Middleware
     use Rack::Reloader
