@@ -3,29 +3,29 @@ require 'nokogiri'
 require 'open-uri'
 
 class SeoReport
+  attr_reader :ready_url
+
   def initialize(url)
     @url = url
   end
 
   def generate
+    @ready_url = prepare(@url)
+    
     _response = HTTParty.get(@url)
     @headers = _response.headers
 
     _doc = Nokogiri::HTML(_response.body)
     @links = _doc.css('a')
     @links.each do |link|
-      unless link[:href] =~ /http(s*):\/\/(www\.)*/ 
-        link[:href] = "http://" + prepare(@url) + link[:href]
-      end
+      link[:href] = "http://" + @ready_url.to_s + link[:href].to_s unless
+      (link[:href] =~ /http(s*):\/\/(www\.)*/) ||
+      (link[:href] =~ /^mailto:/)
     end
 
     @ip = IPSocket::getaddress(prepare(@url))
     
     @time = Time.at(Time.now.to_i).strftime("%e %B %Y %k:%M")
-
-    _body = Slim::Template.new("./views/report.slim").render(self)
-    _ready_url = prepare(@url)
-    File.write(File.expand_path("#{_ready_url}_#{Time.now.to_i}.html", "public/reports"),_body)
   end
 
   def prepare(url)
@@ -35,5 +35,5 @@ class SeoReport
     else
       url = url[7..url.length-1]
     end
-  end
+  end 
 end
