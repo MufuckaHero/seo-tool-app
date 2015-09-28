@@ -3,7 +3,7 @@ require 'nokogiri'
 require 'open-uri'
 
 class SeoReport
-  attr_reader :ready_url
+  attr_accessor :ready_url, :headers, :links, :ip, :time, :url
 
   def initialize(url)
     @url = url

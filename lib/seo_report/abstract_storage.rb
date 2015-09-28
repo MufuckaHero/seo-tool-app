@@ -1,12 +1,10 @@
-require 'pg'
-
 class AbstractStorage
   def allreports
   end
 
-  def addreport
+  def addreport(report)
   end
 
-  def findreport(filename)
+  def findreport(value)
   end
 end

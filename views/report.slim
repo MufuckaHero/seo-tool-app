@@ -37,8 +37,8 @@ html
           th Target
         - @links.each do |link|
           tr
-            td = link.text
+            td = link[0]
             td 
-              a href= "#{link[:href]}" = link[:href]
-            td = link["rel"]
-            td = link["target"]
+              a href= "#{link[1]}" = link[1]
+            td = link[2]
+            td = link[3]
