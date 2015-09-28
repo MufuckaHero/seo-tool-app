@@ -3,6 +3,7 @@ require_relative 'seo_report/seo_report.rb'
 require_relative 'seo_report/abstract_storage.rb'
 require_relative 'seo_report/files_storage.rb'
 require_relative 'seo_report/data_storage.rb'
+require_relative 'seo_report/data_mapper.rb'
 
 module Seo
   class App < ::Sinatra::Application
@@ -10,19 +11,19 @@ module Seo
     use Rack::Reloader
 
     get '/' do
-      @reports = Storage.new.allreports
+      @reports = DataStorage.new.allreports
 
       slim :index
     end
 
     get '/reports/:id' do
-      @storage = Storage.new.findreport(params[:id])
+      @storage = DataStorage.new.findreport(params[:id])
     end
 
     post '/report' do
       @report = SeoReport.new(params[:url])
       @report.generate
-      @storage = Storage.new.addreport(@report)
+      @storage = DataStorage.new.addreport(@report)
 
       redirect '/'
     end

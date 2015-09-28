@@ -10,8 +10,8 @@ class DataStorage < AbstractStorage
     }
     @conn = PG::Connection.new(_db_params)
 
-    @conn.exec "CREATE TABLE IF NOT EXISTS Reports(id SERIAl, url TEXT, time TEXT, ip VARCHAR(45))"
-    @conn.exec "CREATE TABLE IF NOT EXISTS Links(id SERIAL, name TEXT, href VARCHAR(255), rel VARCHAR(255), target VARCHAR(15), report_id INT)"
+    @conn.exec "CREATE TABLE IF NOT EXISTS Reports(id SERIAl, url TEXT, time TEXT, ip TEXT)"
+    @conn.exec "CREATE TABLE IF NOT EXISTS Links(id SERIAL, name TEXT, href TEXT, rel TEXT, target VARCHAR(15), report_id INT)"
     @conn.exec "CREATE TABLE IF NOT EXISTS Headers(id SERIAL, key TEXT, value TEXT, report_id INT)"
   end
   
@@ -39,7 +39,7 @@ class DataStorage < AbstractStorage
 
     report.links.each do |link|
   	  @conn.exec "INSERT INTO Links (name, href, rel, target, report_id) 
-  	              VALUES ('#{link.text}','#{link[:href]}','#{link["rel"]}','#{link["target"]}','#{_id}');"
+  	              VALUES ('#{escape_apostrophe(link.text)}','#{link[:href]}','#{link["rel"]}','#{link["target"]}','#{_id}');"
     end
      
     report.headers.each do |k,v|
@@ -67,5 +67,15 @@ class DataStorage < AbstractStorage
     @report.headers = _headers
 
     Slim::Template.new("./views/report.slim").render(@report)
+  end
+
+  def escape_apostrophe(string)
+    old_string = string
+    string = " " if string.nil?
+    if string.include? '\''
+      string.gsub!('\'','\'\'')
+    else
+      old_string
+    end
   end
 end
