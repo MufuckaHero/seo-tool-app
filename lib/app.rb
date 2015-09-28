@@ -10,19 +10,19 @@ module Seo
     use Rack::Reloader
 
     get '/' do
-      @reports = SeoApp::Storage.new.allreports
+      @reports = Storage.new.allreports
 
       slim :index
     end
 
     get '/reports/:id' do
-      @storage = SeoApp::Storage.new.findreport(params[:id])
+      @storage = Storage.new.findreport(params[:id])
     end
 
     post '/report' do
       @report = SeoReport.new(params[:url])
       @report.generate
-      @storage = SeoApp::Storage.new.addreport(@report)
+      @storage = Storage.new.addreport(@report)
 
       redirect '/'
     end
@@ -31,6 +31,7 @@ module Seo
       status 404
       "Something wrong! Try to type URL correctly or call to UFO."
     end
+
+  
   end
 end
-
