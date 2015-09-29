@@ -44,7 +44,7 @@ class DataStorage < AbstractStorage
      
     report.headers.each do |k,v|
       @conn.exec "INSERT INTO Headers (key, value, report_id)
-                  VALUES ('#{k}','#{v}','#{_id}');"
+                  VALUES ('#{k}','#{escape_apostrophe(v)}','#{_id}');"
     end
   end
 

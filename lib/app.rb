@@ -4,11 +4,15 @@ require_relative 'seo_report/abstract_storage.rb'
 require_relative 'seo_report/files_storage.rb'
 require_relative 'seo_report/data_storage.rb'
 require_relative 'seo_report/data_mapper.rb'
+require_relative 'seo.rb'
 
 module Seo
   class App < ::Sinatra::Application
     # Middleware
     use Rack::Reloader
+
+    set :public_folder, -> { Seo.root_path.join('public').to_s }
+    set :views, -> { Seo.root_path.join('views').to_s }
 
     get '/' do
       @reports = DataStorage.new.allreports

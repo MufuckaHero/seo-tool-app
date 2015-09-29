@@ -1,7 +1,4 @@
-require 'rubygems'
-Bundler.require
-
-require ::File.expand_path('../lib/app',  __FILE__)
+require ::File.expand_path('../config/environment',  __FILE__)
 
 module Rack
   class Lint
