@@ -1,14 +1,9 @@
 require 'pg'
 
-class DataStorage < AbstractStorage
+class DataStorage < Storage::AbstractStorage
   def initialize
-  	_db_params = {
-      host:     'localhost',
-      dbname:   'seotool',
-      user:     'seo',
-      password: 'seo'
-    }
-    @conn = PG::Connection.new(_db_params)
+    db_params = Storage::DbSqlStorage.config_path
+    @conn = PG::Connection.new(db_params)
 
     @conn.exec "CREATE TABLE IF NOT EXISTS Reports(id SERIAl, url TEXT, time TEXT, ip TEXT)"
     @conn.exec "CREATE TABLE IF NOT EXISTS Links(id SERIAL, name TEXT, href TEXT, rel TEXT, target VARCHAR(15), report_id INT)"
@@ -70,12 +65,7 @@ class DataStorage < AbstractStorage
   end
 
   def escape_apostrophe(string)
-    old_string = string
-    string = " " if string.nil?
-    if string.include? '\''
-      string.gsub!('\'','\'\'')
-    else
-      old_string
-    end
+    string.gsub('\'','\'\'')
   end
 end
+

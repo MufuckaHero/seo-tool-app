@@ -1,9 +1,10 @@
 require 'sinatra'
 require_relative 'seo_report/seo_report.rb'
-require_relative 'seo_report/abstract_storage.rb'
-require_relative 'seo_report/files_storage.rb'
-require_relative 'seo_report/data_storage.rb'
-require_relative 'seo_report/data_mapper.rb'
+require_relative 'seo_report/storages/abstract_storage.rb'
+require_relative 'seo_report/storages/files_storage.rb'
+require_relative 'seo_report/storages/data_storage.rb'
+require_relative 'seo_report/storages/data_mapper.rb'
+require_relative 'seo_report/storages/module_storage.rb'
 require_relative 'seo.rb'
 
 module Seo

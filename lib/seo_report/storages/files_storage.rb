@@ -1,4 +1,4 @@
-class FilesStorage < AbstractStorage
+class FilesStorage < Storage::AbstractStorage
   def initialize
   	FileUtils.mkdir_p("./public/reports/")
   end
