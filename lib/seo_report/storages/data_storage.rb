@@ -1,5 +1,3 @@
-require 'pg'
-
 class DataStorage < Storage::AbstractStorage
   def initialize
     db_params = Storage::DbSqlStorage.config_path
@@ -17,7 +15,7 @@ class DataStorage < Storage::AbstractStorage
       @files << {
         url:  file['url'],
         time: file['time'],
-        path: file['id'].to_i
+        id: file['id'].to_i
       }
     end
     @files.sort_by { |url| url[:url] }

@@ -17,7 +17,7 @@ class FilesStorage < Storage::AbstractStorage
         _files << {
           url: file.gsub(/_.+/, ''),
           time: Time.at(_file_time.to_i).strftime("%e %B %Y %k:%M"),
-          path: "#{file}.html"
+          id: "#{file}.html"
         }
       end
       _files.sort_by { |url| url[:url] }
